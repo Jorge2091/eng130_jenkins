@@ -26,10 +26,23 @@ The first step is to make sure your security is correctly identified for jenkins
 1. make a new ec2 instance
 2. in security group, add ip address of jenkins with correct inside ssh port 22.
 3. inside jenkins, add your .pem file using the ssh agent "ssh username with private key" kind.
-4. in a shell inside jenkins commands, scp file app to ec2 in aws using `ssh -A -o "StrickHostKeyChecking=no" ubuntu@ec2-ip:/file`
-5. copy file inside this ec2 with scp
+4. in a shell inside jenkins commands, and rsync files
 6. cd to new app
 7. npm install
 8. npm start & disown (background)
 now if you need to stop npm, you need to `ps aux` and shut down npm before redoing these steps.
 <img src="./images/jekins_pipeline.png"/>
+
+## Functions to sync files from jenkins to aws
+inside jenkins shell information
+```bash
+rsync -avz -e "ssh -o StrictHostKeyChecking=no" app ubuntu@ip:/home/ubuntu
+rsync -avz -e "ssh -o StrictHostKeyChecking=no" environment ubuntu@ip:/home/ubuntu
+ssh -o "StrictHostKeyChecking=no" ubuntu@ip <<EOF
+    sudo bash ./environment/aap/provision.sh
+    sudo bash ./environment/db/provision.sh
+    cd app
+    pm2 kill
+    pm2 start app.js
+EOF
+```
