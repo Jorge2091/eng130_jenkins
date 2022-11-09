@@ -32,4 +32,4 @@ The first step is to make sure your security is correctly identified for jenkins
 7. npm install
 8. npm start & disown (background)
 now if you need to stop npm, you need to `ps aux` and shut down npm before redoing these steps.
-<img src="./images/jenkins_pipline.png"/>
+<img src="./images/jekins_pipline.png"/>
