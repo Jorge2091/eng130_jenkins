@@ -26,7 +26,7 @@ The first step is to make sure your security is correctly identified for jenkins
 1. make a new ec2 instance
 2. in security group, add ip address of jenkins with correct inside ssh port 22.
 3. inside jenkins, add your .pem file using the ssh agent "ssh username with private key" kind.
-4. in a shell inside jenkins commands, scp file app to ec2 in aws using `ssh -A -o "StrickHostKeyChecking=no" ubuntu@ec2-ip:/file
+4. in a shell inside jenkins commands, scp file app to ec2 in aws using `ssh -A -o "StrickHostKeyChecking=no" ubuntu@ec2-ip:/file`
 5. copy file inside this ec2 with scp
 6. cd to new app
 7. npm install
