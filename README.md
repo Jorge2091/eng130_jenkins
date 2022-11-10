@@ -52,11 +52,11 @@ inside jenkins shell information
 rsync -avz -e "ssh -o StrictHostKeyChecking=no" app ubuntu@ip:/home/ubuntu
 rsync -avz -e "ssh -o StrictHostKeyChecking=no" environment ubuntu@ip:/home/ubuntu
 ssh -o "StrictHostKeyChecking=no" ubuntu@ip <<EOF
-    sudo bash ./environment/aap/provision.sh
-    sudo bash ./environment/db/provision.sh
+    sudo killall -9 node
+
     cd app
-    pm2 kill
-    pm2 start app.js
+    npm install
+    nohup node app.js > /dev/null 2>&1 &
 EOF
 ```
 ### connect database
@@ -64,6 +64,4 @@ Use an db AMI inside aws to run the database and launch the instance
 1. start new job
 2. ssh into app ec2(look at the above lines)
 3. you will be located in ~
-4. `chmod ugo+rwx ~/.bashrc` make readable and writable by any user
-5. `echo "export DB_HOST=mongodb://IP:27017/posts" >> ~/.bashrc` this will line an extra line to make variable DB_HOST
-6. 
+4. `echo "export DB_HOST=mongodb://IP:27017/posts" >> ~/.bashrc` this will line an extra line to make variable DB_HOST
